@@ -3,13 +3,15 @@ import cors from 'cors';
 import morgan from 'morgan';
 import Express from 'express';
 
+import path from 'path';
+
 const app = Express();
 app.use(cors());
 app.use(Express.json());
 app.use(morgan('dev'));
 
 app.get('/', (req, res) => {
-  res.send('Hello World');
+  res.sendFile(path.resolve(__dirname, 'static/index.html'));
 });
 
 app.listen(8080, () => {
