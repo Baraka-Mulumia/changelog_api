@@ -1,3 +1,11 @@
+import { Schemas, ValidateSchema } from './modules/validation';
+import {
+  createProduct,
+  deleteProduct,
+  getProduct,
+  getProducts,
+  updateProduct,
+} from './handlers/product';
 import {
   createUpdate,
   deleteUpdate,
@@ -6,27 +14,25 @@ import {
   updateUpdate,
 } from './handlers/updates';
 import {
-  getProduct,
-  getProducts,
-  createProduct,
-  updateProduct,
-  deleteProduct,
-} from './handlers/product';
-import { ValidateSchema, Schemas } from './modules/validation';
-import { Router, Response } from 'express';
+  createUpdatePoint,
+  deleteUpdatePoint,
+  getUpdatePoint,
+  getUpdatePoints,
+  updateUpdatePoint,
+} from './handlers/updatePoint';
 
-const router = Router();
+import { Router } from 'express';
+
+const APIRouter = Router();
 /**
  * Product
  */
 
-router
-  .route('/product')
+APIRouter.route('/product')
   .get(getProducts)
   .post(ValidateSchema(Schemas.product), createProduct);
 
-router
-  .route('/product/:id')
+APIRouter.route('/product/:id')
   .get(getProduct)
   .put(ValidateSchema(Schemas.product), updateProduct)
   .delete(deleteProduct);
@@ -34,13 +40,11 @@ router
 /**
  * Update
  */
-router
-  .route('/update')
+APIRouter.route('/update')
   .get(getUpdates)
   .post(ValidateSchema(Schemas.update), createUpdate);
 
-router
-  .route('/update/:id')
+APIRouter.route('/update/:id')
   .get(getUpdate)
   .put(ValidateSchema(Schemas.update), updateUpdate)
   .delete(deleteUpdate);
@@ -49,14 +53,13 @@ router
  * UpdatePoint
  */
 
-router.get('/updatepoint', (req, res) => {});
+APIRouter.route('/updatepoint')
+  .get(getUpdatePoints)
+  .post(ValidateSchema(Schemas.updatePoint), createUpdatePoint);
 
-router.get('/updatepoint/:id', (req, res) => {});
+APIRouter.route('/updatepoint/:id')
+  .get(getUpdatePoint)
+  .put(ValidateSchema(Schemas.updatePoint), updateUpdatePoint)
+  .delete(deleteUpdatePoint);
 
-router.post('/updatepoint', (req, res) => {});
-
-router.put('/updatepoint/:id', (req, res) => {});
-
-router.delete('/updatepoint/:id', (req, res) => {});
-
-export default router;
+export default APIRouter;
