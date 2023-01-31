@@ -1,5 +1,5 @@
-import { Response } from 'express';
 import { IRequest } from '../types';
+import { Response } from 'express';
 import { prismaClient } from '../utils/dbConnect';
 
 //Get all products
@@ -111,6 +111,13 @@ export const updateProduct = async (req: IRequest, res: Response) => {
 // Delete a product
 export const deleteProduct = async (req: IRequest, res: Response) => {
   try {
+    // cascade delete all updates
+    await prismaClient.update.deleteMany({
+      where: {
+        productId: req.params.id,
+      },
+    });
+
     const product = await prismaClient.product.delete({
       where: {
         id_belongsToId: {

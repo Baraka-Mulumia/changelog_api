@@ -9,7 +9,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import path from 'path';
-import router from './router';
+import APIRouter from './router';
 
 const app = Express();
 app.use(cors());
@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname, 'static/index.html'));
 });
 
-app.use('/api', protect, router);
+app.use('/api', protect, APIRouter);
 
 app.post('/user', createNewUser);
 app.post('/signin', signin);

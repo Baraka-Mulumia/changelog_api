@@ -1,5 +1,5 @@
-import { Response } from 'express';
 import { IRequest } from '../types';
+import { Response } from 'express';
 import { prismaClient } from '../utils/dbConnect';
 
 // Create a new update
@@ -185,6 +185,12 @@ export const deleteUpdate = async (req: IRequest, res: Response) => {
         success: false,
       });
     }
+    //cascade delete  all update points
+    await prismaClient.updatePoint.deleteMany({
+      where: {
+        updateId: req.params.id,
+      },
+    });
 
     const deletedUpate = await prismaClient.update.delete({
       where: {
