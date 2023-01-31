@@ -1,7 +1,12 @@
+import { createNewUser, signin } from './handlers/user';
+import { protect } from './modules/auth';
 import { InfoLogger } from './utils/logger';
 import cors from 'cors';
 import morgan from 'morgan';
 import Express from 'express';
+
+import dotenv from 'dotenv';
+dotenv.config();
 
 import path from 'path';
 import router from './router';
@@ -16,7 +21,10 @@ app.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname, 'static/index.html'));
 });
 
-app.use('/api', router);
+app.use('/api', protect, router);
+
+app.post('/user', createNewUser);
+app.post('/signin', signin);
 
 app.listen(8080, () => {
   InfoLogger('Creativity starts with viewing the whole world differently');
