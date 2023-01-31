@@ -1,20 +1,25 @@
-import { Router } from 'express';
+import {
+  getProduct,
+  getProducts,
+  createProduct,
+  updateProduct,
+  deleteProduct,
+} from './handlers/product';
+import { ValidateSchema, Schemas } from './modules/validation';
+import { Router, Response } from 'express';
+
+// import { body, validationResult } from 'express-validator';
+import { prismaClient } from './utils/dbConnect';
 
 const router = Router();
 /**
  * Product
  */
-router.get('/product', (req, res) => {
-  res.json({ message: 'product' });
-});
-
-router.get('/product/:id', (req, res) => {});
-
-router.post('/product', (req, res) => {});
-
-router.put('/product/:id', (req, res) => {});
-
-router.delete('/product/:id', (req, res) => {});
+router.get('/product', getProducts);
+router.get('/product/:id', getProduct);
+router.post('/product', ValidateSchema(Schemas.product), createProduct);
+router.put('/product/:id', ValidateSchema(Schemas.product), updateProduct);
+router.delete('/product/:id', deleteProduct);
 
 /**
  * Update
