@@ -1,4 +1,11 @@
 import {
+  createUpdate,
+  deleteUpdate,
+  getUpdate,
+  getUpdates,
+  updateUpdate,
+} from './handlers/updates';
+import {
   getProduct,
   getProducts,
   createProduct,
@@ -8,32 +15,35 @@ import {
 import { ValidateSchema, Schemas } from './modules/validation';
 import { Router, Response } from 'express';
 
-// import { body, validationResult } from 'express-validator';
-import { prismaClient } from './utils/dbConnect';
-
 const router = Router();
 /**
  * Product
  */
-router.get('/product', getProducts);
-router.get('/product/:id', getProduct);
-router.post('/product', ValidateSchema(Schemas.product), createProduct);
-router.put('/product/:id', ValidateSchema(Schemas.product), updateProduct);
-router.delete('/product/:id', deleteProduct);
+
+router
+  .route('/product')
+  .get(getProducts)
+  .post(ValidateSchema(Schemas.product), createProduct);
+
+router
+  .route('/product/:id')
+  .get(getProduct)
+  .put(ValidateSchema(Schemas.product), updateProduct)
+  .delete(deleteProduct);
 
 /**
  * Update
  */
+router
+  .route('/update')
+  .get(getUpdates)
+  .post(ValidateSchema(Schemas.update), createUpdate);
 
-router.get('/update', (req, res) => {});
-
-router.get('/update/:id', (req, res) => {});
-
-router.post('/update', (req, res) => {});
-
-router.put('/update/:id', (req, res) => {});
-
-router.delete('/update/:id', (req, res) => {});
+router
+  .route('/update/:id')
+  .get(getUpdate)
+  .put(ValidateSchema(Schemas.update), updateUpdate)
+  .delete(deleteUpdate);
 
 /**
  * UpdatePoint
