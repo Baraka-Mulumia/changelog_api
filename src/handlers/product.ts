@@ -10,7 +10,11 @@ export const getProducts = async (req: IRequest, res: Response) => {
         id: req?.user?.id,
       },
       select: {
-        products: true,
+        products: {
+          include: {
+            updates: true,
+          },
+        },
         username: true,
         id: true,
       },
