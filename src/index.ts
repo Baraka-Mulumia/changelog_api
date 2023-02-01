@@ -1,15 +1,15 @@
+import Express, { NextFunction, Request, Response } from 'express';
 import { createNewUser, signin } from './handlers/user';
-import { protect } from './modules/auth';
+
+import APIRouter from './router';
 import { InfoLogger } from './utils/logger';
 import cors from 'cors';
-import morgan from 'morgan';
-import Express from 'express';
-
 import dotenv from 'dotenv';
-dotenv.config();
-
+import morgan from 'morgan';
 import path from 'path';
-import APIRouter from './router';
+import { protect } from './modules/auth';
+
+dotenv.config();
 
 const app = Express();
 app.use(cors());
@@ -25,6 +25,15 @@ app.use('/api', protect, APIRouter);
 
 app.post('/user', createNewUser);
 app.post('/signin', signin);
+
+// error handler
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+  res.status(err.status || 500);
+  res.json({
+    message: err.message,
+    error: err,
+  });
+});
 
 app.listen(8080, () => {
   InfoLogger('Creativity starts with viewing the whole world differently');
