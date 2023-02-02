@@ -19,7 +19,7 @@ app.use(Express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 
 app.get('/', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'static/index.html'));
+  res.status(200).sendFile(path.resolve(__dirname, 'static/index.html'));
 });
 
 app.use('/api', protect, APIRouter);
@@ -39,3 +39,5 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
 app.listen(defaultConfig.port, () => {
   InfoLogger(`API-Server is running on port ${defaultConfig.port}`);
 });
+
+export default app;
