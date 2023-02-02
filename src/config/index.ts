@@ -13,7 +13,7 @@ if (stage == 'production') {
 } else if (stage == 'staging') {
   envConfig = require('./staging').default;
 } else {
-  envConfig = require('./local').default;
+  envConfig = require('./dev').default;
 }
 
 const defaultConfig = merge(
