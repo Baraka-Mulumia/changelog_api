@@ -1,8 +1,9 @@
 import { NextFunction, Response } from 'express';
-import jwt from 'jsonwebtoken';
-import { JWT_SECRET_KEY } from '../config/constants';
+
 import { IRequest } from '../types';
+import { JWT_SECRET_KEY } from '../constants';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 type Payload = {
   id: string;
