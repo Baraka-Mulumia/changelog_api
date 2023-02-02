@@ -4,6 +4,7 @@ import { createNewUser, signin } from './handlers/user';
 import APIRouter from './router';
 import { InfoLogger } from './utils/logger';
 import cors from 'cors';
+import defaultConfig from './config';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
 import path from 'path';
@@ -35,6 +36,6 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   });
 });
 
-app.listen(8080, () => {
-  InfoLogger('Creativity starts with viewing the whole world differently');
+app.listen(defaultConfig.port, () => {
+  InfoLogger(`API-Server is running on port ${defaultConfig.port}`);
 });
