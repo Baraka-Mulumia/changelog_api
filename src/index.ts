@@ -1,7 +1,7 @@
 import Express, { NextFunction, Request, Response } from 'express';
 import { createNewUser, signin } from './handlers/user';
 
-import APIRouter from './router';
+import APIRouter from './apirouter';
 import { InfoLogger } from './utils/logger';
 import cors from 'cors';
 import defaultConfig from './config';
